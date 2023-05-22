@@ -1,2 +1,2 @@
-# Node_API_practice
+# CRUD_API_practice
 A node.js API practice project. Used JS, Node.js, Express, MongoDB
