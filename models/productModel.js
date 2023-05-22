@@ -29,6 +29,7 @@ const productSchema=mongoose.Schema(
 )
 
 // create product model
+// I didn't name the collection formally, so the collection was automatically named by mongoose, which is "products" (Product+s) 
 const Product = mongoose.model('Product', productSchema);
 
 module.exports = Product;

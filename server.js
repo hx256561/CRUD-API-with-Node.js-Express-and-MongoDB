@@ -6,6 +6,8 @@ const app=express();
 
 //code below allows our app specify the json files
 app.use(express.json());
+//code below allows our app specify the request from forms
+app.use(express.urlencoded({extended: false}));
 
 //route
 app.get('/',(req,res)=>{
@@ -41,6 +43,39 @@ app.post('/products', async(req, res)=>{
         res.status(200).json(product);
     } catch (error) {
         console.log(error.message);
+        res.status(500).json({message: error.message});
+    }
+})
+
+
+// update a product
+app.put('/products/:id', async(req, res)=>{
+    try {
+        const {id} = req.params;
+        const product = await Product.findByIdAndUpdate(id, req.body);
+        // if id is invalid
+        if(!product){
+            return res.status(404).json({message: `We can not find product with ID: ${id}`});
+        }
+        // if the data is updated successfully
+        const updatedProduct=await Product.findById(id);
+        return res.status(200).json(updatedProduct);
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+})
+
+// delete data
+app.delete('/products/:id', async(req, res)=>{
+    try {
+        const {id} = req.params;
+        const product = await Product.findByIdAndDelete(id);
+        // if id is invalid
+        if(!product){
+            return res.status(404).json({message: `We can not find product with ID: ${id}`});
+        }
+        return res.status(200).json(product);
+    } catch (error) {
         res.status(500).json({message: error.message});
     }
 })
