@@ -2,6 +2,8 @@ const express=require('express');
 const mongoose=require('mongoose');
 const Product = require('./models/productModel');
 const app=express();
+const API_KEY=require('../API keys/Api_keys');
+
 
 
 //code below allows our app specify the json files
@@ -79,10 +81,8 @@ app.delete('/products/:id', async(req, res)=>{
         res.status(500).json({message: error.message});
     }
 })
-
-// mongoose connection. Replaced the <password> with real password. Replaced ? with collection name
 // connect to the MongoDB first and then listen
-mongoose.connect('mongodb+srv://herman256561:d4fe0e88@angeloapi.zmxyy67.mongodb.net/Node-APIretryWrites=true&w=majority')
+mongoose.connect(API_KEY)
 .then(()=>{
     console.log("connected to MongoDB");
     app.listen(3000, ()=>{
